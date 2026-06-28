@@ -1,11 +1,15 @@
+# Advanced Programming project: Neural Network signal vs. background
+
+## How to run the code
+
 To build the **docker image**
 
 ```sudo docker build -f nn.dockerfile -t nn .```
 
 To execute the image to create the container
 
-```sudo docker run -p 8888:8888 -v /home/giovanni-pedrelli/NN/:/home/jovyan/work nn```
+```sudo docker run -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn```
 
 To execute the image to create the container accessing it via VScode
 
-```sudo docker run -it -p 8888:8888 -v /home/giovanni-pedrelli/NN/:/home/jovyan/work nn jupyter notebook --ip 0.0.0.0```
+```sudo docker run -it -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn jupyter notebook --ip 0.0.0.0```
