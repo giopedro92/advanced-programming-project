@@ -2,10 +2,16 @@
 # Blank lines can be used as separator for readability
 
 # The pattern below match a specific file which will be excluded
-#exlcuded-file
+model.pdf
 
 # The pattern below match a folder and all its content
-#folder/
+.cache/
+.ipynb_checkpoints/
+.ipython/
+.jupyter/
+.keras/
+.local/
+
 
 # The pattern below matches any file with extension .out
 *.root
