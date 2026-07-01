@@ -1,6 +1,6 @@
 FROM quay.io/jupyter/datascience-notebook
 
-RUN pip install numpy uproot scikit-learn matplotlib pandas seaborn tensorflow pydot
+RUN pip install numpy uproot scikit-learn matplotlib pandas seaborn tensorflow pydot gdown
 
 USER root
 
