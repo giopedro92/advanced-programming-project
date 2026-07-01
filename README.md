@@ -8,8 +8,8 @@ To build the **docker image**
 
 To execute the image to create the container
 
-```sudo docker run -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn```
+```sudo docker run --rm -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn```
 
 To execute the image to create the container accessing it via VScode
 
-```sudo docker run -it -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn jupyter notebook --ip 0.0.0.0```
+```sudo docker run -it --rm -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn jupyter notebook --ip 0.0.0.0```
