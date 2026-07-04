@@ -8,6 +8,7 @@ model.png
 # The pattern below match a folder and all its content
 dataset/
 evaluation_results/
+preliminary_analysis/
 .cache/
 .ipynb_checkpoints/
 .ipython/
