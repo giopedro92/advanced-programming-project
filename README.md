@@ -18,11 +18,11 @@ sudo docker build -f nn.dockerfile -t nn .
 To execute the image to create the container and access it via a browser
 
 ```bash
-sudo docker run --rm -p 8888:8888 -v /~/advanced-programming-project/:/home/jovyan/ nn
+sudo docker run --rm -p 8888:8888 -v ~/advanced-programming-project/:/home/jovyan/ nn
 ```
 
 To execute the image to create the container accessing it via VScode
 
 ```bash
-sudo docker run -it --rm -p 8888:8888 -v /~/advanced-programming-project/:/home/jovyan/ nn jupyter notebook --ip 0.0.0.0
+sudo docker run -it --rm -p 8888:8888 -v ~/advanced-programming-project/:/home/jovyan/ nn jupyter notebook --ip 0.0.0.0
 ```
