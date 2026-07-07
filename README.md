@@ -2,14 +2,27 @@
 
 ## How to run the code
 
-To build the **docker image**
+1. Download the content of this repository
+```bash
+cd ~/ && git clone https://github.com/giopedro92/advanced-programming-project.git && cd ~/advanced-programming-project
+```
 
-```sudo docker build -f nn.dockerfile -t nn .```
+2. Build the **docker image**
 
-To execute the image to create the container
+```bash
+sudo docker build -f nn.dockerfile -t nn .
+```
 
-```sudo docker run --rm -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn```
+3. Execute the image to create the container
+
+To execute the image to create the container and access it via a browser
+
+```bash
+sudo docker run --rm -p 8888:8888 -v /~/advanced-programming-project/:/home/jovyan/ nn
+```
 
 To execute the image to create the container accessing it via VScode
 
-```sudo docker run -it --rm -p 8888:8888 -v /home/giovanni-pedrelli/advanced-programming-project/:/home/jovyan/ nn jupyter notebook --ip 0.0.0.0```
+```bash
+sudo docker run -it --rm -p 8888:8888 -v /~/advanced-programming-project/:/home/jovyan/ nn jupyter notebook --ip 0.0.0.0
+```
