@@ -2,13 +2,13 @@
 # Blank lines can be used as separator for readability
 
 # The pattern below match a specific file which will be excluded
-model.pdf
-model.png
+# model.pdf
 
 # The pattern below match a folder and all its content
 dataset/
-evaluation_results/
 preliminary_analysis/
+model_drawings/
+evaluation_results/
 .cache/
 .ipynb_checkpoints/
 .ipython/
