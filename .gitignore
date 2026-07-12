@@ -9,6 +9,7 @@ dataset/
 preliminary_analysis/
 model_drawings/
 evaluation_results/
+readme_images/
 .cache/
 .ipynb_checkpoints/
 .ipython/
