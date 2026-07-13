@@ -76,21 +76,21 @@ predicted probability <= 0.5 → background
 
 The notebook performs the following steps:
 
-1. Imports the required Python modules.
-2. Creates the dataset directory.
-3. Downloads the ROOT dataset from Google Drive only when it is missing or incomplete.
-4. Reads the `TreeS` and `TreeB` trees using Uproot.
-5. Compares signal and background input-variable distributions.
-6. Computes separate signal and background correlation matrices.
-7. Selects and normalizes the input features labelling them as signal or background.
-8. Balances the dataset by limiting the background sample.
-9. Splits the data into training and test sets.
-10. Defines and compiles the neural network.
-11. Trains the model and records the training history.
-12. Generates predictions on the test set.
-13. Computes the ROC curve, confusion matrix, and classification metrics.
-14. Estimates a simple weight-based feature importance.
-15. Saves the numerical and graphical results.
+1. **Imports** the required **Python modules**.
+2. **Creates** the dataset **directory**.
+3. **Downloads** the **ROOT dataset** from Google Drive only when it is missing or incomplete.
+4. **Reads** the `TreeS` and `TreeB` **trees** using Uproot.
+5. Compares signal and background **input-variable distributions**.
+6. Computes separate signal and background **correlation matrices**.
+7. **Selects and normalizes the input features labelling them** as signal or background.
+8. Balances the dataset by **limiting the background sample**.
+9. **Splits** the data into **training and test** sets.
+10. **Defines and compiles the neural network**.
+11. **Trains** the model and records the training history.
+12. **Generates predictions** on the test set.
+13. Computes the **ROC curve**, **confusion matrix**, and **classification metrics**.
+14. **Estimates** a simple weight-based **feature importance**.
+15. **Saves** the numerical and graphical **results**.
 
 
 ## 3. Dataset
@@ -126,15 +126,18 @@ The original **background** tree is considerably larger, so it is truncated to m
 
 The seven variables used by the neural network are:
 
-| Feature |
-|---|
-| `massK0S` |
-| `tImpParBach` |
-| `tImpParV0` |
-| `CtK0S` |
-| `cosPAK0S` |
-| `nSigmapr` |
-| `dcaV0` |
+| Feature | Physical meaning |
+|---|---|
+| `massK0S` | mass of the $K^0_S$ |
+| `tImpParBach` | impact parameter of the bachelor (the proton) |
+| `tImpParV0` | impact parameter of the $V^0$ (the $K^0_S$) |
+| `CtK0S` | $c \tau$ of the $K^0_S$ |
+| `cosPAK0S` | $\cos$ of the angle between the vertices and the direction of the $K^0_S$ |
+| `nSigmapr` | probability for the bachelor to be a proton |
+| `dcaV0` | minimun distance between the pions produced by the $V^0$ (the $K^0_S$) |
+
+- the potentially produced **proton** is called **bachelor**
+- the potentially produced $K^0_S$ is called $V^0$
 
 **The preliminary analysis compares the signal and background distributions of each variable and examines correlations among the input variables.**
 
@@ -258,7 +261,7 @@ Output: 1 neuron, sigmoid
 | Learning rate | 0.001 |
 | Loss function | Binary cross-entropy |
 | Batch size | 32 |
-| Epochs | 10 |
+| **Epochs** | **10** |
 | Validation split | 0.2 |
 | Classification threshold | 0.5 |
 
@@ -332,13 +335,15 @@ The following values refer to a typical notebook output.
 | Signal (`1`) | 0.81 | 0.83 | 0.82 | 188,859 |
 | **Overall accuracy** | — | — | **0.81** | **377,458** |
 
+The **support** column shows the number of total events belonging to that regardless of the classification (correct of incorrect).
+
 ***The exact values may change slightly between runs because the TensorFlow random seed is not explicitly fixed in the notebook.***
 
 
 ## 10. Graphical results
 
 
-### 10.1 ROC curve  and AUC: signal efficiency and background rejection
+### 10.1 ROC (Receiver Operating Characteristic) curve  and AUC: signal efficiency and background rejection
 
 The curve plots signal efficiency, equivalent to the true-positive rate, against background rejection, defined as `1 - FPR`, for different classification thresholds.
 
@@ -544,12 +549,12 @@ The reported confusion matrix and threshold-dependent metrics use a fixed thresh
 
 Potential extensions include:
 
-- selecting the classification threshold according to the physics objective;
-- using early stopping;
-- saving the trained model;
-- comparing the neural network with simpler baseline classifiers;
-- tuning the number of neurons, dropout rate, learning rate, and batch size;
-- applying the trained network on real data to make predictions (!).
+- selecting the **classification threshold** according to the **physics** objective;
+- using **early stopping**;
+- **saving the trained model**;
+- **comparing** the neural network with simpler baseline classifiers;
+- **tuning** the number of neurons, dropout rate, learning rate, and batch size;
+- **applying the trained network on real data to make predictions (!)**.
 
 
 ## References
