@@ -1,7 +1,7 @@
 # Neural Network for Signal–Background Classification
 
-> **Author**: Giovanni Pedrelli\
-> **Course**: Advanced Programming
+> **Author:** Giovanni Pedrelli\
+> **Course:** Advanced Programming
 
 This repository contains a Jupyter notebook that trains and evaluates a feed-forward supervised Neural Network for a binary classification problem:
 
@@ -17,17 +17,18 @@ The workflow reads events from a ROOT file, performs a preliminary analysis of t
 - [2. Workflow](#workflow)
 - [3. Dataset](#dataset)
 - [4. Input features](#input-features)
-- [5. Data preparation](#data-preparation)
-- [6. Neural-network architecture](#neural-network-architecture)
-- [7. Training configuration](#training-configuration)
-- [8. Main results](#main-results)
-- [9. Graphical results](#graphical-results)
-- [10. Repository structure](#repository-structure)
-- [11. Requirements](#requirements)
-- [12. How to run the project](#how-to-run-the-project)
-- [13. Generated outputs](#generated-outputs)
-- [14. Reproducibility and methodological notes](#reproducibility-and-methodological-notes)
-- [15. Possible improvements](#possible-improvements)
+- [5. Preliminary analysis](#8-preliminary-analysis)
+- [6. Data preparation](#data-preparation)
+- [7. Neural-network architecture](#neural-network-architecture)
+- [8. Training configuration](#training-configuration)
+- [9. Main results](#main-results)
+- [10. Graphical results](#graphical-results)
+- [11. Repository structure](#repository-structure)
+- [12. Requirements](#requirements)
+- [13. How to run the project](#how-to-run-the-project)
+- [14. Generated outputs](#generated-outputs)
+- [15. Reproducibility and methodological notes](#reproducibility-and-methodological-notes)
+- [16. Possible improvements](#possible-improvements)
 - [References](#references)
 
 
@@ -39,11 +40,11 @@ In the ALICE experiment at CERN, the heavy ion collisions are compared with the 
 
 The measurement of the **production cross section** of the $\Lambda^+_c$ baryon, at low transverse momentum, provides a way to test different theoretical models.
 
-![Theoretical models](/readme_images/theoretical_models.png)
+![Theoretical models](https://i.ibb.co/NzPFGGj/theoretical-models.png)
 
 The considered decay channel is $\Lambda_c^{+}(udc) \rightarrow p(uud) + K_S^{0}\left(\frac{d\bar{s}+s\bar{d}}{\sqrt{2}}\right)$.
 
-![Decay channel](/readme_images/decay_channel.png)
+![Decay channel](https://i.ibb.co/Fq86nkgC/decay.png)
 
 > The **objective** of this project was to develop an independent and customizable **machine learning framework** for decay analysis and, more generally, for any **High Energy Physics (HEP)** analysis using the open-source **TensorFlow libraries** and the **Keras APIs**. My task has been to build and train the Neural Network.
 
@@ -54,7 +55,7 @@ The **dataset** used to train the Neural Network contains:
   - TPC (15): charged-particle tracking and identification (PID);
   - TOF (12): charged-particle identification (PID) through time-of-flight measurements.
 
-![ALICE](/readme_images/ALICE.png)
+![ALICE](https://i.ibb.co/JR2yc2cy/ALICE.png)
 
 
 ## 1. Project overview
@@ -137,10 +138,32 @@ The seven variables used by the neural network are:
 
 **The preliminary analysis compares the signal and background distributions of each variable and examines correlations among the input variables.**
 
-## 5. Data preparation
+
+## 5. Preliminary analysis
 
 
-### 5.1 Class labels
+### 5.1 Input-variable distributions
+
+The normalized histograms compare the **shapes** of the signal and background distributions. Variables with visibly different distributions may provide useful discriminating information to the model.
+
+We can also appreciate the necessity of using different techniques from a classic cut, like a neural network, to make the analysis, because the signal and backgound data heavily overlap for each variable.
+
+![Signal and background input-variables distributions](https://i.ibb.co/9HqF2W9v/vars-histogram.jpg)
+
+
+### 5.2 Correlation matrices
+
+The correlation matrices are calculated separately for signal and background. Differences between the two matrices may provide additional information useful for classification.
+
+The purpose of these plots is to **understand whether some input variables carry similar information due to hidden correlations between them**. Strongly correlated variables may be partially redundant, while weakly correlated variables may provide more independent information to the neural network.
+
+![Signal and background correlation matrices](https://i.ibb.co/gbTsy6xj/correlation-matrixes.jpg)
+
+
+## 6. Data preparation
+
+
+### 6.1 Class labels
 
 The target array is defined as:
 
@@ -159,12 +182,12 @@ np.concatenate([
 ```
 
 
-### 5.2 Normalization
+### 6.2 Normalization
 
 Each variable is divided by its maximum value. Signal and background are normalized separately before being concatenated.
 
 
-### 5.3 Dataset split
+### 6.3 Dataset split
 
 The balanced dataset is divided using:
 
@@ -185,7 +208,7 @@ Therefore:
 - During `model.fit()`, **20%** of the training pool is used as **validation data**.
 
 
-## 6. Neural-network architecture
+## 7. Neural-network architecture
 
 The model is implemented using the Keras `Sequential` API.
 
@@ -217,12 +240,12 @@ Output: 1 neuron, sigmoid
 - The **dropout layers** randomly set **20%** of their inputs to zero during training to reduce overfitting.
 - The final **sigmoid** neuron produces a value between **0** and **1**.
 
-![Keras model architecture](model_drawings/model.png)
+![Keras model architecture](https://i.ibb.co/pjnLpxL4/model.png)
 
-![Neural-network architecture with neurons and connections](model_drawings/model_neurons.svg)
+![Neural-network architecture with neurons and connections](https://i.ibb.co/Wv4Pr7RT/model-neurons.jpg)
 
 
-## 7. Training configuration
+## 8. Training configuration
 
 | Hyperparameter | Value |
 |---|---:|
@@ -252,7 +275,7 @@ The monitored metrics are:
 The F1-score is calculated from precision and recall after training.
 
 
-### 7.1 Training time
+### 8.1 Training time
 
 For a typical run:
 
@@ -264,7 +287,7 @@ Wall time: approximately 4 minutes and 29 seconds
 ***Execution time can vary depending on the processor, available memory, TensorFlow version, and GPU availability.***
 
 
-## 8. Main results
+## 9. Main results
 
 The following values refer to a typical notebook output.
 
@@ -279,7 +302,7 @@ The following values refer to a typical notebook output.
 | False-positive rate at threshold 0.5 | 0.200070 | 20.01% |
 
 
-### 8.1 Interpretation
+### 9.1 Interpretation
 
 - The **accuracy** indicates that approximately 81.3% of all test events are **classified correctly**.
 - The **precision** indicates that approximately 80.5% of the events **classified as signal are actually signal**.
@@ -289,7 +312,7 @@ The following values refer to a typical notebook output.
 - At the threshold of 0.5, approximately 80.0% of the background events are **correctly rejected**.
 
 
-### 8.2 Confusion matrix values
+### 9.2 Confusion matrix values
 
 **Rows** correspond to **true classes** (wrote in the labels) and **columns** correspond to **predicted classes** (classified by the neural network).
 
@@ -298,10 +321,10 @@ The following values refer to a typical notebook output.
 | **True background** | TN = 150.866 | FP = 37.733 |
 | **True signal** | FN = 32.858 | TP = 156.001 |
 
-![Confusion matrix](evaluation_results/confusion_matrix.svg)
+![Confusion matrix](https://i.ibb.co/HfL262zR/confusion-matrix.jpg)
 
 
-### 8.3 Classification report
+### 9.3 Classification report
 
 | Class | Precision | Recall | F1-score | Support |
 |---|---:|---:|---:|---:|
@@ -312,28 +335,10 @@ The following values refer to a typical notebook output.
 ***The exact values may change slightly between runs because the TensorFlow random seed is not explicitly fixed in the notebook.***
 
 
-## 9. Graphical results
+## 10. Graphical results
 
 
-### 9.1 Input-variable distributions
-
-The normalized histograms compare the **shapes** of the signal and background distributions. Variables with visibly different distributions may provide useful discriminating information to the model.
-
-We can also appreciate the necessity of using different techniques from a classic cut, like a neural network, to make the analysis, because the signal and backgound data heavily overlap for each variable.
-
-![Signal and background input-variables distributions](preliminary_analysis/vars_histogram.svg)
-
-
-### 9.2 Correlation matrices
-
-The correlation matrices are calculated separately for signal and background. Differences between the two matrices may provide additional information useful for classification.
-
-The purpose of these plots is to **understand whether some input variables carry similar information due to hidden correlations between them**. Strongly correlated variables may be partially redundant, while weakly correlated variables may provide more independent information to the neural network.
-
-![Signal and background correlation matrices](preliminary_analysis/correlation_matrixes.svg)
-
-
-### 9.3 ROC curve  and AUC: signal efficiency and background rejection
+### 10.1 ROC curve  and AUC: signal efficiency and background rejection
 
 The curve plots signal efficiency, equivalent to the true-positive rate, against background rejection, defined as `1 - FPR`, for different classification thresholds.
 
@@ -351,10 +356,10 @@ ROC AUC	in our case is 0.9043 so it's quite good.
 
 Higher **ROC AUC** means that the model is better at assigning higher probabilities to signal events than to background events.
 
-![Signal efficiency versus background rejection](evaluation_results/roc_curve.svg)
+![Signal efficiency versus background rejection](https://i.ibb.co/1GBKz0Sc/roc-curve.jpg)
 
 
-### 9.4 Feature importance
+### 10.2 Feature importance
 
 The notebook estimates feature importance using the mean absolute first-layer weight associated with each input feature.
 
@@ -370,27 +375,27 @@ For a typical run, the approximate ranking is:
 | 6 | `massK0S` | 0.214017 |
 | 7 | `cosPAK0S` | 0.177059 |
 
-![Weight-based feature importance](evaluation_results/feature_importance.svg)
+![Weight-based feature importance](https://i.ibb.co/gLyVS9YR/feature-importance.jpg)
 
 ***This feature-importance method is a heuristic based only on the first-layer weights. It should not be interpreted as a causal or definitive measure of physical importance.***
 
 
-### 9.5 Accuracy during training
+### 10.3 Accuracy during training
 
-![Training and validation accuracy](evaluation_results/metrics_during_epochs_train_validation_accuracy.svg)
-
-
-### 9.6 Loss during training
-
-![Training and validation loss](evaluation_results/metrics_during_epochs_train_validation_loss.svg)
+![Training and validation accuracy](https://i.ibb.co/GvQH42j3/metrics-during-epochs-train-validation-accuracy.jpg)
 
 
-### 9.7 F1-score during training
+### 10.4 Loss during training
 
-![Training and validation F1-score](evaluation_results/metrics_during_epochs_train_validation_F1.svg)
+![Training and validation loss](https://i.ibb.co/Hfk55Pxg/metrics-during-epochs-train-validation-loss.jpg)
 
 
-## 10. Repository structure
+### 10.5 F1-score during training
+
+![Training and validation F1-score](https://i.ibb.co/Q76KF7j1/metrics-during-epochs-train-validation-F1.jpg)
+
+
+## 11. Repository structure
 
 The repository structure is the following (inside the folders there will be the output files):
 
@@ -409,7 +414,7 @@ The repository structure is the following (inside the folders there will be the 
 The ROOT dataset is large and is not committed to GitHub, the same holds for compiled, generated, results files. So everything is setup in the [```.gitignore```](.gitignore) file.
 
 
-## 11. Requirements
+## 12. Requirements
 
 The notebook uses the following main packages:
 
@@ -435,24 +440,24 @@ graphviz
 Everything is already downloaded in the [`nn.dockerfile`](/nn.dockerfile).
 
 
-## 12. How to run the project
+## 13. How to run the project
 
 
-### 12.1. Download the content of this repository
+### 13.1. Download the content of this repository
 
 ```bash
 cd ~/ && git clone https://github.com/giopedro92/advanced-programming-project.git && cd ~/advanced-programming-project
 ```
 
 
-### 12.2. Build the **docker image**
+### 13.2. Build the **docker image**
 
 ```bash
 sudo docker build -f nn.dockerfile -t nn .
 ```
 
 
-### 12.3. Execute the image to create the container
+### 13.3. Execute the image to create the container
 
 - To execute the image to create the container and access it via a **browser**
 
@@ -467,12 +472,12 @@ sudo docker run -it --rm -p 8888:8888 -v ~/advanced-programming-project/:/home/j
 ```
 
 
-### 12.4. Execute the notebook
+### 13.4. Execute the notebook
 
 Run the notebook from top to bottom. The needed files, the generated directories and the result files are downloaded or created automatically.
 
 
-## 13. Numerical outputs
+## 14. Numerical outputs
 
 [`NN.txt`](evaluation_results/NN.txt)
 
@@ -484,9 +489,9 @@ This file contains:
 - all FPR and TPR pairs used for the ROC analysis.
 
 
-## 14. Reproducibility and methodological notes
+## 15. Reproducibility and methodological notes
 
-### 14.1 Randomness
+### 15.1 Randomness
 
 The train/test split is reproducible because `random_state=42` is used. However, ***TensorFlow's random seed is not explicitly fixed, so network initialization, dropout masks, and final numerical results may vary slightly***.
 
@@ -519,7 +524,7 @@ X_test_scaled  = scaler.transform(X_test)
 ```
 -->
 
-### 14.2 Feature importance
+### 15.2 Feature importance
 
 The current feature importance is based on the average absolute weights of the first dense layer. This is useful as a quick diagnostic, but it does not fully capture nonlinear interactions among features.
 
@@ -530,12 +535,12 @@ More robust alternatives include:
 - feature ablation studies.
 
 
-### 14.3 Threshold selection
+### 15.3 Threshold selection
 
 The reported confusion matrix and threshold-dependent metrics use a fixed threshold of 0.5. A different threshold may be preferable depending on the **required trade-off between signal efficiency and background rejection**.
 
 
-## 15. Possible improvements
+## 16. Possible improvements
 
 Potential extensions include:
 
